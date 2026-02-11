@@ -1,0 +1,62 @@
+<div class="login-page">
+  <div class="login-card row g-0">
+
+    <!-- LEFT IMAGE -->
+    <div class="col-md-6 image-section d-none d-md-flex">
+      <img
+        [src]="currentImage"
+        alt="Login Illustration"
+        class="img-fluid"
+      />
+    </div>
+
+    <!-- RIGHT FORM -->
+    <div class="col-md-6 form-section">
+      <div class="form-wrapper">
+
+        <!-- LOGO -->
+        <img
+          src="images/St2i_logo.png"
+          alt="Company Logo"
+          class="logo mb-3"
+        />
+
+        <h2 class="title mb-4">Sign In</h2>
+
+        <form>
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Enter your email"
+            />
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Enter your password"
+            />
+          </div>
+
+          <!-- Forgot Password -->
+          <div class="text-end mb-3">
+            <a href="#" class="forgot-password">Forgot password?</a>
+          </div>
+
+          <!-- Sign In Button -->
+          <button type="submit" class="btn btn-signin w-100">
+            Sign In
+          </button>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
