@@ -1,80 +1,86 @@
-<div class="app-layout d-flex">
-
-  <!-- LEFT SIDEBAR -->
-  <aside class="sidebar d-flex flex-column">
-    
-    <div class="logo-container">
-      <img
-        src="images/St2i_logo.png"
-        alt="ST2I Logo"
-        class="sidebar-logo"
-      />
-    </div>
-
-    <!-- Menu -->
-    <ul class="nav flex-column mt-4">
-      <li class="nav-item">
-        <a routerLink="/employees" routerLinkActive="active" class="nav-link">
-          <i class="bi bi-people"></i>
-          <span>Employees</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a routerLink="/projects" routerLinkActive="active" class="nav-link">
-          <i class="bi bi-kanban"></i>
-          <span>Projects</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a routerLink="/teams" routerLinkActive="active" class="nav-link">
-          <i class="bi bi-diagram-3"></i>
-          <span>Teams</span>
-        </a>
-      </li>
-    </ul>
-
-    <!-- Sign out -->
-    <div class="mt-auto p-3">
-      <a class="nav-link text-danger">
-        <i class="bi bi-box-arrow-right"></i>
-        <span>Sign Out</span>
-      </a>
-    </div>
-  </aside>
-
-  <!-- MAIN AREA -->
-  <div class="main-content flex-grow-1">
-
-    <!-- TOP BAR -->
-    <header class="topbar d-flex align-items-center justify-content-between px-4">
-
-      <!-- LEFT (empty or page title later) -->
-      <div></div>
-
-      <!-- RIGHT SIDE -->
-      <div class="topbar-actions d-flex align-items-center gap-3">
-
-        <!-- NOTIFICATION -->
-        <i class="bi bi-bell fs-5"></i>
-
-      
-
-        <!-- USER AVATAR (FAR RIGHT) -->
-        <img
-          src="images/Avatar_user.png"
-          alt="User"
-          class="user-avatar"
-        />
-
-      </div>
-    </header>
-
-    <!-- ROUTED CONTENT -->
-    <main class="page-content p-4">
-      <router-outlet></router-outlet>
-    </main>
-
-  </div>
+<!-- LOGIN PAGE (no layout) -->
+<div *ngIf="isLoginPage(); else mainLayout">
+  <router-outlet></router-outlet>
 </div>
+
+<!-- MAIN LAYOUT -->
+<ng-template #mainLayout>
+  <div class="app-layout d-flex">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar d-flex flex-column">
+      
+      <div class="logo-container">
+        <img
+          src="images/St2i_logo.png"
+          alt="ST2I Logo"
+          class="sidebar-logo"
+        />
+      </div>
+
+      <!-- Menu -->
+      <ul class="nav flex-column mt-4">
+        <li class="nav-item">
+          <a routerLink="/employees" routerLinkActive="active" class="nav-link">
+            <i class="bi bi-people"></i>
+            <span>Employees</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/projects" routerLinkActive="active" class="nav-link">
+            <i class="bi bi-kanban"></i>
+            <span>Projects</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/teams" routerLinkActive="active" class="nav-link">
+            <i class="bi bi-diagram-3"></i>
+            <span>Teams</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Sign out -->
+      <div class="mt-auto p-3">
+        <a class="nav-link text-danger" routerLink="/login">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Sign Out</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <div class="main-content flex-grow-1">
+
+      <!-- TOP BAR -->
+      <header class="topbar d-flex align-items-center justify-content-between px-4">
+
+        <!-- LEFT (empty or page title later) -->
+        <div></div>
+
+        <!-- RIGHT SIDE -->
+        <div class="topbar-actions d-flex align-items-center gap-3">
+
+          <!-- NOTIFICATION -->
+          <i class="bi bi-bell fs-5"></i>
+
+          <!-- USER AVATAR -->
+          <img
+            src="images/Avatar_user.png"
+            alt="User"
+            class="user-avatar"
+          />
+
+        </div>
+      </header>
+
+      <!-- ROUTED CONTENT -->
+      <main class="page-content p-4">
+        <router-outlet></router-outlet>
+      </main>
+
+    </div>
+  </div>
+</ng-template>
