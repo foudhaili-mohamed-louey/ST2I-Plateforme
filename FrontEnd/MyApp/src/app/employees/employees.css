@@ -94,3 +94,46 @@
   font-size: 22px;
   color: #0d6efd;
 }
+/* Clickable cards */
+.clickable {
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+.clickable:hover {
+  transform: translateY(-2px);
+}
+
+/* Toolbar polish */
+.search-input,
+.filter-input {
+  height: 38px;
+}
+
+/* Optional: make table checkboxes a bit cleaner */
+.modern-table input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+}
+/* Clickable overview cards */
+.clickable {
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+.clickable:hover {
+  transform: translateY(-2px);
+}
+
+/* Modal backdrop (Angular modal) */
+.modal-backdrop-custom {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1040;
+}
+.modal.d-block {
+  z-index: 1050;
+}

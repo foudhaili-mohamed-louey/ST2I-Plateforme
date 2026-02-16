@@ -1,63 +1,77 @@
 <div class="container mt-4">
-
   <!-- ================= OVERVIEW ================= -->
   <h3 class="fw-bold mb-4">Overview</h3>
 
   <div class="row g-4 mb-5">
-
     <!-- Total -->
     <div class="col-lg-3">
-      <div class="overview-card">
+      <div
+        class="overview-card clickable"
+        (click)="applyQuickFilter('total')"
+        role="button"
+        tabindex="0"
+      >
         <div class="icon-circle bg-primary-subtle text-primary">
           <i class="bi bi-calendar-event"></i>
         </div>
         <p class="mt-3 mb-1 fw-semibold">Total Projects</p>
-        <h2 class="fw-bold">12</h2>
+        <h2 class="fw-bold">{{ totalProjectsCount }}</h2>
       </div>
     </div>
 
     <!-- Running -->
     <div class="col-lg-3">
-      <div class="overview-card">
+      <div
+        class="overview-card clickable"
+        (click)="applyQuickFilter('running')"
+        role="button"
+        tabindex="0"
+      >
         <div class="icon-circle bg-success-subtle text-success">
           <i class="bi bi-clock-history"></i>
         </div>
         <p class="mt-3 mb-1 fw-semibold">Running Projects</p>
-        <h2 class="fw-bold">5</h2>
+        <h2 class="fw-bold">{{ runningProjectsCount }}</h2>
       </div>
     </div>
 
     <!-- Pending -->
     <div class="col-lg-3">
-      <div class="overview-card">
+      <div
+        class="overview-card clickable"
+        (click)="applyQuickFilter('pending')"
+        role="button"
+        tabindex="0"
+      >
         <div class="icon-circle bg-warning-subtle text-warning">
           <i class="bi bi-hourglass-split"></i>
         </div>
         <p class="mt-3 mb-1 fw-semibold">Pending Projects</p>
-        <h2 class="fw-bold">3</h2>
+        <h2 class="fw-bold">{{ pendingProjectsCount }}</h2>
       </div>
     </div>
 
     <!-- Ended -->
     <div class="col-lg-3">
-      <div class="overview-card">
+      <div
+        class="overview-card clickable"
+        (click)="applyQuickFilter('ended')"
+        role="button"
+        tabindex="0"
+      >
         <div class="icon-circle bg-success-subtle text-success">
           <i class="bi bi-check-circle"></i>
         </div>
         <p class="mt-3 mb-1 fw-semibold">Ended Projects</p>
-        <h2 class="fw-bold">4</h2>
+        <h2 class="fw-bold">{{ endedProjectsCount }}</h2>
       </div>
     </div>
-
   </div>
-
 
   <!-- ================= PROJECTS SECTION ================= -->
   <div class="card p-4 shadow-sm projects-container">
-
     <!-- Header Row -->
-    <div class="row align-items-center mb-4">
-
+    <div class="row align-items-center mb-4 g-2">
       <div class="col-lg-2">
         <h4 class="fw-bold mb-0">Projects</h4>
       </div>
@@ -67,132 +81,306 @@
           <span class="input-group-text bg-white">
             <i class="bi bi-search"></i>
           </span>
-          <input type="text" class="form-control" placeholder="Search projects...">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search projects..."
+            [value]="searchTerm"
+            (input)="searchTerm = $any($event.target).value"
+          />
         </div>
       </div>
 
-      <div class="col-lg-1 text-end fw-semibold">
-        Filter:
-      </div>
+      <div class="col-lg-1 text-end fw-semibold text-muted">Filter:</div>
 
       <div class="col-lg-2">
-        <select class="form-select">
-          <option>Department</option>
-          <option>Development</option>
-          <option>Financial</option>
-          <option>Marketing</option>
+        <select
+          class="form-select"
+          [value]="selectedDepartment"
+          (change)="selectedDepartment = $any($event.target).value"
+        >
+          <option value="All">All Departments</option>
+          <option *ngFor="let d of departments" [value]="d">{{ d }}</option>
         </select>
       </div>
 
       <div class="col-lg-2">
-        <select class="form-select">
-          <option>Status</option>
-          <option>Running</option>
-          <option>Pending</option>
-          <option>Ended</option>
+        <select
+          class="form-select"
+          [value]="selectedStatus"
+          (change)="selectedStatus = $any($event.target).value"
+        >
+          <option value="All">All Status</option>
+          <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
         </select>
       </div>
 
-      <div class="col-lg-2 text-end">
-        <button class="btn btn-primary add-btn">
+      <div class="col-lg-2 text-end d-flex justify-content-end gap-2">
+        <button class="btn btn-outline-secondary" type="button" (click)="clearFilters()">
+          <i class="bi bi-x-circle"></i> Clear
+        </button>
+
+        <button class="btn btn-outline-primary" type="button" (click)="exportCsv()">
+          <i class="bi bi-download"></i> Export
+        </button>
+
+        <button class="btn btn-primary add-btn" type="button" (click)="openAddModal()">
           <i class="bi bi-plus-lg"></i> Add Project
         </button>
       </div>
-
     </div>
 
+    <!-- Info row -->
+    <div class="mb-3 small text-muted d-flex justify-content-between align-items-center">
+      <div>
+        Showing <span class="fw-semibold">{{ filteredProjects.length }}</span> project(s)
+      </div>
+      <div *ngIf="selectedDepartment !== 'All' || selectedStatus !== 'All' || searchTerm.trim()">
+        Filters applied
+      </div>
+    </div>
 
     <!-- Projects Grid -->
     <div class="row g-4">
-
-      <!-- Pending Card -->
-      <div class="col-lg-4">
-        <div class="project-card pending-card">
-
+      <div class="col-lg-4" *ngFor="let p of filteredProjects; trackBy: trackByProjectId">
+        <div
+          class="project-card"
+          [ngClass]="getCardClass(p.status)"
+          role="button"
+          tabindex="0"
+          (click)="openDetails(p)"
+        >
           <div class="project-header d-flex justify-content-between align-items-center">
-            <span><i class="bi bi-hourglass-split me-2"></i> Pending</span>
+            <span>
+              <i class="bi me-2" [ngClass]="getStatusIcon(p.status)"></i>
+              {{ getStatusLabel(p.status) }}
+            </span>
 
-            <div class="dropdown">
-              <button class="btn btn-light btn-sm rounded-circle"
-                      data-bs-toggle="dropdown">
-                <i class="bi bi-plus"></i>
+            <!-- prevent card click when using dropdown -->
+            <div class="dropdown" (click)="$event.stopPropagation()">
+              <button class="btn btn-light btn-sm rounded-circle" data-bs-toggle="dropdown">
+                <i class="bi bi-three-dots"></i>
               </button>
 
               <ul class="dropdown-menu dropdown-menu-end shadow">
-                <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Update</a></li>
-                <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Delete</a></li>
+                <li>
+                  <button class="dropdown-item" type="button" (click)="cycleStatus(p.id)">
+                    <i class="bi bi-toggle-on me-2"></i> Change Status
+                  </button>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <button
+                    class="dropdown-item text-danger"
+                    type="button"
+                    (click)="deleteProject(p.id)"
+                  >
+                    <i class="bi bi-trash me-2"></i> Delete
+                  </button>
+                </li>
               </ul>
             </div>
           </div>
 
           <div class="project-body">
-            <h5 class="fw-bold">Website Redesign</h5>
-            <p>Revamp the landing page and improve UI/UX design.</p>
-          </div>
+            <h5 class="fw-bold mb-1">{{ p.name }}</h5>
+            <p class="text-muted mb-2">{{ p.description }}</p>
 
-        </div>
-      </div>
-
-
-      <!-- Progress Card -->
-      <div class="col-lg-4">
-        <div class="project-card progress-card">
-
-          <div class="project-header d-flex justify-content-between align-items-center">
-            <span><i class="bi bi-arrow-repeat me-2"></i> On Progress</span>
-
-            <div class="dropdown">
-              <button class="btn btn-light btn-sm rounded-circle"
-                      data-bs-toggle="dropdown">
-                <i class="bi bi-plus"></i>
-              </button>
-
-              <ul class="dropdown-menu dropdown-menu-end shadow">
-                <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Update</a></li>
-                <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Delete</a></li>
-              </ul>
+            <div class="d-flex justify-content-between align-items-center small">
+              <span class="badge bg-light text-dark border">
+                <i class="bi bi-building me-1"></i> {{ p.department }}
+              </span>
             </div>
           </div>
-
-          <div class="project-body">
-            <h5 class="fw-bold">Mobile App Development</h5>
-            <p>Develop a mobile app for iOS and Android platforms.</p>
-          </div>
-
         </div>
       </div>
 
-
-      <!-- Done Card -->
-      <div class="col-lg-4">
-        <div class="project-card done-card">
-
-          <div class="project-header d-flex justify-content-between align-items-center">
-            <span><i class="bi bi-check-circle me-2"></i> Done</span>
-
-            <div class="dropdown">
-              <button class="btn btn-light btn-sm rounded-circle"
-                      data-bs-toggle="dropdown">
-                <i class="bi bi-plus"></i>
-              </button>
-
-              <ul class="dropdown-menu dropdown-menu-end shadow">
-                <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Update</a></li>
-                <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Delete</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="project-body">
-            <h5 class="fw-bold">E-commerce Platform</h5>
-            <p>Launch a new e-commerce platform with updated features.</p>
-          </div>
-
+      <div *ngIf="filteredProjects.length === 0" class="col-12">
+        <div class="text-center text-muted py-5">
+          <i class="bi bi-search fs-3 d-block mb-2"></i>
+          No projects found.
         </div>
       </div>
-
     </div>
-
   </div>
+</div>
 
+<!-- ================= DETAILS MODAL ================= -->
+<div *ngIf="isDetailsOpen && selectedProject">
+  <div class="modal-backdrop-custom" (click)="closeDetails()"></div>
+
+  <div class="modal d-block" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content shadow-sm">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title fw-bold mb-0">{{ selectedProject.name }}</h5>
+            <div class="small text-muted">
+              #{{ selectedProject.id }} • {{ selectedProject.department }} •
+              {{ selectedProject.status }}
+            </div>
+          </div>
+          <button type="button" class="btn-close" (click)="closeDetails()"></button>
+        </div>
+
+        <div class="modal-body">
+          <p class="text-muted mb-3">{{ selectedProject.description }}</p>
+
+          <div class="row g-3">
+
+            <div class="col-md-4">
+              <div class="detail-box">
+                <div class="small text-muted">Budget</div>
+                <div class="fw-semibold">
+                  {{ selectedProject.budget ? selectedProject.budget + ' TND' : '—' }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="detail-box">
+                <div class="small text-muted">Start Date</div>
+                <div class="fw-semibold">{{ selectedProject.startDate }}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="detail-box">
+                <div class="small text-muted">End Date</div>
+                <div class="fw-semibold">{{ selectedProject.endDate || '—' }}</div>
+              </div>
+            </div>
+
+            <div class="col-12" *ngIf="selectedProject.notes">
+              <div class="detail-box">
+                <div class="small text-muted">Notes</div>
+                <div class="fw-semibold">{{ selectedProject.notes }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-outline-secondary" type="button" (click)="closeDetails()">
+            Close
+          </button>
+          <button class="btn btn-primary" type="button" (click)="cycleStatus(selectedProject.id)">
+            Change Status
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= ADD PROJECT MODAL ================= -->
+<div *ngIf="isAddModalOpen">
+  <div class="modal-backdrop-custom" (click)="closeAddModal()"></div>
+
+  <div class="modal d-block" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content shadow-sm">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold">Add Project</h5>
+          <button type="button" class="btn-close" (click)="closeAddModal()"></button>
+        </div>
+
+        <div class="modal-body">
+          <div *ngIf="formError" class="alert alert-danger py-2">
+            {{ formError }}
+          </div>
+
+          <div class="row g-2">
+            <div class="col-12">
+              <label class="form-label">Project Name *</label>
+              <input
+                class="form-control"
+                [value]="newProject.name"
+                (input)="newProject.name = $any($event.target).value"
+              />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Description *</label>
+              <textarea
+                class="form-control"
+                rows="3"
+                [value]="newProject.description"
+                (input)="newProject.description = $any($event.target).value"
+              ></textarea>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Department *</label>
+              <select
+                class="form-select"
+                [value]="newProject.department"
+                (change)="newProject.department = $any($event.target).value"
+              >
+                <option *ngFor="let d of departments" [value]="d">{{ d }}</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Status *</label>
+              <select
+                class="form-select"
+                [value]="newProject.status"
+                (change)="newProject.status = $any($event.target).value"
+              >
+                <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Start Date (dd/mm/yyyy) *</label>
+              <input
+                class="form-control"
+                placeholder="e.g. 10/02/2026"
+                [value]="newProject.startDate"
+                (input)="newProject.startDate = $any($event.target).value"
+              />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">End Date (optional)</label>
+              <input
+                class="form-control"
+                placeholder="e.g. 30/03/2026"
+                [value]="newProject.endDate"
+                (input)="newProject.endDate = $any($event.target).value"
+              />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Budget</label>
+              <input
+                type="number"
+                min="0"
+                class="form-control"
+                placeholder="TND"
+                [value]="newProject.budget"
+                (input)="newProject.budget = $any($event.target).value"
+              />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Notes</label>
+              <textarea
+                class="form-control"
+                rows="2"
+                [value]="newProject.notes"
+                (input)="newProject.notes = $any($event.target).value"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-light" type="button" (click)="closeAddModal()">Cancel</button>
+          <button class="btn btn-primary" type="button" (click)="saveProject()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

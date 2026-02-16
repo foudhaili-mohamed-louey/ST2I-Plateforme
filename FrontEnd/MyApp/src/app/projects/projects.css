@@ -9,13 +9,13 @@
   background: white;
   padding: 25px;
   border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
 }
 
 .overview-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 18px 35px rgba(0,0,0,0.12);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
 }
 
 .icon-circle {
@@ -42,21 +42,21 @@
 
 .add-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Project Cards */
 .project-card {
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   background: white;
 }
 
 .project-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 18px 35px rgba(0,0,0,0.15);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.15);
 }
 
 .project-header {
@@ -80,4 +80,46 @@
 
 .done-card .project-header {
   background: linear-gradient(135deg, #10b981, #34d399);
+}
+/* Make overview cards feel clickable (same idea as Employees) */
+.clickable {
+  cursor: pointer;
+}
+
+/* Slightly nicer dropdown icon button */
+.project-header .btn.btn-light {
+  border: none;
+}
+
+/* Reduce description spacing a bit */
+.project-body p {
+  line-height: 1.35;
+}
+/* Clickable cards */
+.clickable {
+  cursor: pointer;
+}
+
+/* Make project card feel clickable without breaking your hover */
+.project-card[role='button'] {
+  cursor: pointer;
+}
+
+/* Modal backdrop (same system as Employees) */
+.modal-backdrop-custom {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1040;
+}
+.modal.d-block {
+  z-index: 1050;
+}
+
+/* Details modal boxes */
+.detail-box {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
 }

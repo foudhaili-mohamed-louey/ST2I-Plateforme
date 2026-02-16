@@ -1,27 +1,32 @@
 <div class="container-fluid mt-4">
-
   <!-- OVERVIEW TITLE -->
   <h4 class="fw-bold mb-1">Overview</h4>
-  <hr class="mb-3">
+  <hr class="mb-3" />
 
   <!-- OVERVIEW CARDS -->
   <div class="row g-3 mb-4">
-
     <!-- Total Employees -->
     <div class="col-md-3">
-      <div class="card overview-card shadow-sm">
+      <div
+        class="card overview-card shadow-sm clickable"
+        (click)="applyQuickFilter('total')"
+        role="button"
+        tabindex="0"
+      >
         <div class="d-flex justify-content-between align-items-center">
           <div>
             <small class="text-muted">Total Employees</small>
-            <h3 class="fw-bold mb-1">267</h3>
+            <h3 class="fw-bold mb-1">{{ totalEmployeesCount }}</h3>
+
             <small class="text-primary">
-              <i class="bi bi-gender-male"></i> 162 
+              <i class="bi bi-gender-male"></i> {{ maleEmployeesCount }}
               <span class="mx-1">|</span>
-              <i class="bi bi-gender-female"></i> 105 
+              <i class="bi bi-gender-female"></i> {{ femaleEmployeesCount }}
             </small>
           </div>
+
           <div class="icon-circle mb-2">
-          <i class="bi bi-people-fill"></i>
+            <i class="bi bi-people-fill"></i>
           </div>
         </div>
       </div>
@@ -29,11 +34,16 @@
 
     <!-- Active -->
     <div class="col-md-3">
-      <div class="card overview-card shadow-sm">
+      <div
+        class="card overview-card shadow-sm clickable"
+        (click)="applyQuickFilter('active')"
+        role="button"
+        tabindex="0"
+      >
         <div class="d-flex justify-content-between align-items-center">
           <div>
             <small class="text-muted">Active Employees</small>
-            <h3 class="fw-bold text-success">214</h3>
+            <h3 class="fw-bold text-success">{{ activeEmployeesCount }}</h3>
           </div>
           <i class="bi bi-person-check-fill icon-big text-success"></i>
         </div>
@@ -42,11 +52,16 @@
 
     <!-- Inactive -->
     <div class="col-md-3">
-      <div class="card overview-card shadow-sm">
+      <div
+        class="card overview-card shadow-sm clickable"
+        (click)="applyQuickFilter('inactive')"
+        role="button"
+        tabindex="0"
+      >
         <div class="d-flex justify-content-between align-items-center">
           <div>
             <small class="text-muted">Inactive Employees</small>
-            <h3 class="fw-bold text-danger">53</h3>
+            <h3 class="fw-bold text-danger">{{ inactiveEmployeesCount }}</h3>
           </div>
           <i class="bi bi-person-x-fill icon-big text-danger"></i>
         </div>
@@ -55,175 +70,288 @@
 
     <!-- Departments -->
     <div class="col-md-3">
-      <div class="card overview-card shadow-sm">
+      <div
+        class="card overview-card shadow-sm clickable"
+        (click)="applyQuickFilter('departments')"
+        role="button"
+        tabindex="0"
+      >
         <div class="d-flex justify-content-between align-items-center">
           <div>
             <small class="text-muted">Departments</small>
-            <h3 class="fw-bold">4</h3>
+            <h3 class="fw-bold">{{ departmentsCount }}</h3>
           </div>
           <i class="bi bi-building icon-big text-primary"></i>
         </div>
       </div>
     </div>
-
   </div>
 
-
   <!-- EMPLOYEES CARD -->
-  <div class="card shadow-sm">
-
+  <div class="card shadow-sm" #employeesTable>
     <!-- Toolbar -->
     <div class="employees-toolbar border-bottom">
-
       <div class="left-group">
         <h5 class="fw-bold mb-0">Employees</h5>
-        <input type="text" class="form-control search-input" placeholder="Search employees...">
+
+        <input
+          type="text"
+          class="form-control search-input"
+          placeholder="Search employees..."
+          [value]="searchTerm"
+          (input)="searchTerm = $any($event.target).value"
+        />
       </div>
 
       <div class="right-group">
-
         <span class="fw-semibold text-muted me-1">Filter:</span>
 
-        <select class="form-select filter-input">
-          <option>Department</option>
-          <option>IT</option>
-          <option>HR</option>
-          <option>Finance</option>
-          <option>Marketing</option>
+        <select
+          class="form-select filter-input"
+          [value]="selectedDepartment"
+          (change)="selectedDepartment = $any($event.target).value"
+        >
+          <option value="All">All Departments</option>
+          <option value="IT">IT</option>
+          <option value="HR">HR</option>
+          <option value="Finance">Finance</option>
+          <option value="Marketing">Marketing</option>
         </select>
 
-        <select class="form-select filter-input">
-          <option>Status</option>
-          <option>Active</option>
-          <option>Inactive</option>
+        <select
+          class="form-select filter-input"
+          [value]="selectedStatus"
+          (change)="selectedStatus = $any($event.target).value"
+        >
+          <option value="All">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
         </select>
 
-        <button class="btn btn-outline-primary">
+        <button class="btn btn-outline-secondary" type="button" (click)="clearFilters()">
+          <i class="bi bi-x-circle"></i> Clear
+        </button>
+
+        <button class="btn btn-outline-primary" type="button" (click)="exportCsv()">
           <i class="bi bi-download"></i> Export
         </button>
 
-        <button class="btn btn-danger">
+        <button class="btn btn-primary" type="button" (click)="openAddModal()">
           <i class="bi bi-plus-lg"></i> Add Employee
         </button>
-
       </div>
-
     </div>
 
+    <!-- Info row -->
+    <div class="px-3 py-2 d-flex justify-content-between align-items-center small text-muted">
+      <div>
+        Showing <span class="fw-semibold">{{ filteredEmployees.length }}</span> employee(s)
+      </div>
+      <div *ngIf="selectedCount > 0">
+        Selected: <span class="fw-semibold">{{ selectedCount }}</span>
+      </div>
+    </div>
 
     <!-- TABLE -->
     <div class="table-responsive table-scroll">
-
       <table class="table table-hover align-middle modern-table">
+        <thead class="sticky-top">
+          <tr>
+            <th style="width: 44px">
+              <input
+                type="checkbox"
+                [checked]="allFilteredSelected"
+                [indeterminate]="someFilteredSelected"
+                (change)="toggleSelectAll($any($event.target).checked)"
+              />
+            </th>
+            <th>Employee</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Department</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Hire Date</th>
+            <th class="text-end">Action</th>
+          </tr>
+        </thead>
 
-  <thead class="sticky-top">
-    <tr>
-      <th><input type="checkbox"></th>
-      <th>Employee</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Department</th>
-      <th>Role</th>
-      <th>Status</th>
-      <th>Hire Date</th>
-      <th class="text-end">Action</th>
-    </tr>
-  </thead>
+        <tbody>
+          <tr *ngFor="let e of filteredEmployees; trackBy: trackByEmployeeId">
+            <td>
+              <input
+                type="checkbox"
+                [checked]="isSelected(e.id)"
+                (change)="toggleOne(e.id, $any($event.target).checked)"
+              />
+            </td>
 
-  <tbody>
+            <td class="employee-cell">
+              <img [src]="e.avatar" [alt]="e.firstName" />
+              {{ e.firstName }} {{ e.lastName }}
+            </td>
 
-    <tr>
-      <td><input type="checkbox"></td>
-      <td class="employee-cell">
-        <img src="https://i.pravatar.cc/40?img=1">
-        Ahmed
-      </td>
-      <td>Ahmed</td>
-      <td>Ben Salah</td>
-      <td>IT</td>
-      <td>Software Engineer</td>
-      <td><span class="badge bg-success">Active</span></td>
-      <td>12/03/2022</td>
+            <td>{{ e.firstName }}</td>
+            <td>{{ e.lastName }}</td>
+            <td>{{ e.gender }}</td>
+            <td>{{ e.department }}</td>
+            <td>{{ e.role }}</td>
 
-      <!-- ACTION -->
-      <td class="text-end">
-        <div class="dropdown">
-          <button class="btn btn-sm btn-light action-btn" data-bs-toggle="dropdown">
-            <i class="bi bi-three-dots-vertical"></i>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-            <li><a class="dropdown-item"><i class="bi bi-pencil"></i> Update</a></li>
-            <li><a class="dropdown-item"><i class="bi bi-toggle-on"></i> Change Status</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger"><i class="bi bi-trash"></i> Delete</a></li>
-          </ul>
-        </div>
-      </td>
-    </tr>
+            <td>
+              <span
+                class="badge"
+                [class.bg-success]="e.status === 'Active'"
+                [class.bg-danger]="e.status === 'Inactive'"
+              >
+                {{ e.status }}
+              </span>
+            </td>
 
-    <!-- COPY SAME ACTION CELL FOR ALL ROWS -->
-    <tr>
-      <td><input type="checkbox"></td>
-      <td class="employee-cell">
-        <img src="https://i.pravatar.cc/40?img=2">
-        Sarra
-      </td>
-      <td>Sarra</td>
-      <td>Trabelsi</td>
-      <td>HR</td>
-      <td>HR Manager</td>
-      <td><span class="badge bg-success">Active</span></td>
-      <td>05/09/2022</td>
+            <td>{{ e.hireDate }}</td>
 
-      <td class="text-end">
-        <div class="dropdown">
-          <button class="btn btn-sm btn-light action-btn" data-bs-toggle="dropdown">
-            <i class="bi bi-three-dots-vertical"></i>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-            <li><a class="dropdown-item"><i class="bi bi-pencil"></i> Update</a></li>
-            <li><a class="dropdown-item"><i class="bi bi-toggle-on"></i> Change Status</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger"><i class="bi bi-trash"></i> Delete</a></li>
-          </ul>
-        </div>
-      </td>
-    </tr>
+            <!-- ACTION -->
+            <td class="text-end">
+              <div class="dropdown">
+                <button class="btn btn-sm btn-light action-btn" data-bs-toggle="dropdown">
+                  <i class="bi bi-three-dots-vertical"></i>
+                </button>
 
-    <!-- EXTRA FAKE ROWS -->
-    <tr *ngFor="let i of [].constructor(15)">
-      <td><input type="checkbox"></td>
-      <td class="employee-cell">
-        <img src="https://i.pravatar.cc/40?img=6">
-        Test User
-      </td>
-      <td>Test</td>
-      <td>User</td>
-      <td>IT</td>
-      <td>Developer</td>
-      <td><span class="badge bg-success">Active</span></td>
-      <td>01/01/2022</td>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                  <li>
+                    <button class="dropdown-item" type="button">
+                      <i class="bi bi-pencil"></i> Update
+                    </button>
+                  </li>
 
-      <td class="text-end">
-        <div class="dropdown">
-          <button class="btn btn-sm btn-light action-btn" data-bs-toggle="dropdown">
-            <i class="bi bi-three-dots-vertical"></i>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-            <li><a class="dropdown-item"><i class="bi bi-pencil"></i> Update</a></li>
-            <li><a class="dropdown-item"><i class="bi bi-toggle-on"></i> Change Status</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger"><i class="bi bi-trash"></i> Delete</a></li>
-          </ul>
-        </div>
-      </td>
-    </tr>
+                  <li>
+                    <button class="dropdown-item" type="button" (click)="toggleStatus(e.id)">
+                      <i class="bi bi-toggle-on"></i> Change Status
+                    </button>
+                  </li>
 
-  </tbody>
+                  <li><hr class="dropdown-divider" /></li>
 
-</table>
+                  <li>
+                    <button
+                      class="dropdown-item text-danger"
+                      type="button"
+                      (click)="deleteEmployee(e.id)"
+                    >
+                      <i class="bi bi-trash"></i> Delete
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
 
+          <tr *ngIf="filteredEmployees.length === 0">
+            <td colspan="10" class="text-center py-4 text-muted">No employees found.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</div>
 
+<!-- ADD EMPLOYEE MODAL (Angular controlled, frontend-only) -->
+<div *ngIf="isAddModalOpen">
+  <div class="modal-backdrop-custom" (click)="closeAddModal()"></div>
+
+  <div class="modal d-block" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content shadow-sm">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold">Add Employee</h5>
+          <button type="button" class="btn-close" (click)="closeAddModal()"></button>
+        </div>
+
+        <div class="modal-body">
+          <div *ngIf="formError" class="alert alert-danger py-2">
+            {{ formError }}
+          </div>
+
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">First Name *</label>
+              <input
+                class="form-control"
+                [value]="newEmployee.firstName"
+                (input)="newEmployee.firstName = $any($event.target).value"
+              />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Last Name *</label>
+              <input
+                class="form-control"
+                [value]="newEmployee.lastName"
+                (input)="newEmployee.lastName = $any($event.target).value"
+              />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Gender *</label>
+              <select
+                class="form-select"
+                [value]="newEmployee.gender"
+                (change)="newEmployee.gender = $any($event.target).value"
+              >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Status *</label>
+              <select
+                class="form-select"
+                [value]="newEmployee.status"
+                (change)="newEmployee.status = $any($event.target).value"
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Department *</label>
+              <select
+                class="form-select"
+                [value]="newEmployee.department"
+                (change)="newEmployee.department = $any($event.target).value"
+              >
+                <option *ngFor="let d of departments" [value]="d">{{ d }}</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Hire Date (dd/mm/yyyy) *</label>
+              <input
+                class="form-control"
+                placeholder="e.g. 12/03/2022"
+                [value]="newEmployee.hireDate"
+                (input)="newEmployee.hireDate = $any($event.target).value"
+              />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Role *</label>
+              <input
+                class="form-control"
+                [value]="newEmployee.role"
+                (input)="newEmployee.role = $any($event.target).value"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-light" type="button" (click)="closeAddModal()">Cancel</button>
+          <button class="btn btn-primary" type="button" (click)="saveEmployee()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
