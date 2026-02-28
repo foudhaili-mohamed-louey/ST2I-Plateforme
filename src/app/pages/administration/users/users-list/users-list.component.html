@@ -1,0 +1,72 @@
+<div class="card ui-card">
+    <div class="bar">Search Filters</div>
+
+    <div class="body">
+        <div class="filter-grid">
+            <div class="field">
+                <input pInputText placeholder="Unique Identifier" [(ngModel)]="filters.identifiant" />
+            </div>
+
+            <div class="field">
+                <input pInputText placeholder="First Name" [(ngModel)]="filters.firstName" />
+            </div>
+
+            <div class="field">
+                <input pInputText placeholder="Last Name" [(ngModel)]="filters.lastName" />
+            </div>
+
+            <div class="field">
+                <input pInputText placeholder="Email Address" [(ngModel)]="filters.email" />
+            </div>
+        </div>
+
+        <div class="actions">
+            <p-button icon="pi pi-search" label="Search" (onClick)="search()"></p-button>
+            <p-button icon="pi pi-refresh" label="Reset" severity="danger" [outlined]="true" (onClick)="reset()"></p-button>
+        </div>
+    </div>
+</div>
+
+<div class="card ui-card">
+    <div class="bar bar-row">
+        <div class="bar-title">Users List</div>
+
+        <div class="bar-right">
+            <p-button icon="pi pi-plus" [rounded]="true" (onClick)="add()" styleClass="icon-btn"></p-button>
+            <p-button icon="pi pi-upload" [rounded]="true" (onClick)="export()" styleClass="icon-btn export"></p-button>
+
+            <div class="searchwrap">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" #globalFilter (input)="dt.filterGlobal(globalFilter.value, 'contains')" placeholder="Filter among these elements..." />
+            </div>
+        </div>
+    </div>
+
+    <p-table #dt [value]="rows" [paginator]="true" [rows]="10" [loading]="loading" [globalFilterFields]="['identifiantUniqueEducation', 'firstName', 'lastName', 'email']">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Unique Identifier</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email Address</th>
+                <th style="width: 210px">Actions</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-u>
+            <tr>
+                <td>{{ u.identifiantUnique }}</td>
+                <td>{{ u.firstName }}</td>
+                <td>{{ u.lastName }}</td>
+                <td>{{ u.email }}</td>
+
+                <td class="text-right actions-col">
+                    <p-button icon="pi pi-info-circle" [text]="true" (onClick)="details(u)" styleClass="action-btn info"></p-button>
+                    <p-button icon="pi pi-pencil" [text]="true" (onClick)="edit(u)" styleClass="action-btn edit"></p-button>
+                    <p-button icon="pi pi-trash" [text]="true" (onClick)="delete(u)" styleClass="action-btn del"></p-button>
+                    <p-button icon="pi pi-shield" [text]="true" (onClick)="shield()" styleClass="action-btn shield"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

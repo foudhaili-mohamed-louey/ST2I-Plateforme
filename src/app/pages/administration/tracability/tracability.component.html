@@ -1,0 +1,97 @@
+<!-- FILTER -->
+<div class="card ui-card">
+    <div class="bar">Search Filter</div>
+
+    <div class="body">
+        <div class="filter-grid">
+            <div class="field">
+                <input pInputText placeholder="User" [(ngModel)]="filters.user" />
+            </div>
+
+            <div class="field">
+                <input pInputText placeholder="Service" [(ngModel)]="filters.service" />
+            </div>
+
+            <div class="field">
+                <select class="p-inputtext w-full" [(ngModel)]="filters.method">
+                    <option value="">Method</option>
+                    <option *ngFor="let m of methodOptions" [value]="m">{{ m || 'Method' }}</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <input pInputText placeholder="Path" [(ngModel)]="filters.path" />
+            </div>
+
+            <div class="field">
+                <input pInputText placeholder="IP Address" [(ngModel)]="filters.Ipaddress" />
+            </div>
+
+            <div class="field">
+                <input pInputText placeholder="Status" [(ngModel)]="filters.status" />
+            </div>
+
+            <div class="field">
+                <select class="p-inputtext w-full" [(ngModel)]="filters.result">
+                    <option value="">Result</option>
+                    <option *ngFor="let r of resultOptions" [value]="r">{{ r || 'Result' }}</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <input pInputText placeholder="Timestamp" [(ngModel)]="filters.timestamp" />
+            </div>
+        </div>
+
+        <div class="actions">
+            <p-button icon="pi pi-search" label="Search" (onClick)="search()"></p-button>
+            <p-button icon="pi pi-refresh" label="Reset" severity="danger" [outlined]="true" (onClick)="reset()"></p-button>
+        </div>
+    </div>
+</div>
+
+<!-- TABLE -->
+<div class="card ui-card">
+    <div class="bar bar-row">
+        <div class="bar-title">Trace list</div>
+
+        <div class="bar-right">
+            <p-button icon="pi pi-upload" [rounded]="true" (onClick)="export()" styleClass="icon-btn export"></p-button>
+            <div class="searchwrap">
+                <i class="pi pi-search"></i>
+                
+                <input #globalFilter pInputText type="text" (input)="dt.filterGlobal(globalFilter.value, 'contains')" placeholder="Filter among these elements..." />
+            </div>
+        </div>
+    </div>
+
+    <p-table #dt [value]="rows" [paginator]="true" [rows]="10" [loading]="loading" [globalFilterFields]="['user', 'service', 'method', 'path', 'Ipaddress', 'status', 'result', 'latencyMs', 'timestamp']">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>User</th>
+                <th>Service</th>
+                <th>Method</th>
+                <th>Path</th>
+                <th>IP Address</th>
+                <th>Status</th>
+                <th>Result</th>
+                <th>Latency (ms)</th>
+                <th>Timestamp</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-r>
+            <tr>
+                <td>{{ r.user }}</td>
+                <td>{{ r.service }}</td>
+                <td>{{ r.method }}</td>
+                <td>{{ r.path }}</td>
+                <td>{{ r.Ipaddress }}</td>
+                <td>{{ r.status }}</td>
+                <td>{{ r.result }}</td>
+                <td>{{ r.latencyMs }}</td>
+                <td>{{ r.timestamp }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

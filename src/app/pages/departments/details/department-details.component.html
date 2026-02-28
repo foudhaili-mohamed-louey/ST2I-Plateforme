@@ -1,0 +1,35 @@
+<div *ngIf="dept">
+    <div class="card ui-card">
+        <div class="bar">Department Information</div>
+        <div class="rows">
+            <div class="row">
+                <b>Code</b><span>{{ dept.code }}</span>
+            </div>
+            <div class="row">
+                <b>Name</b><span>{{ dept.name }}</span>
+            </div>
+            <div class="row">
+                <b>Local</b><span>{{ dept.local }}</span>
+            </div>
+            <div class="row">
+                <b>Description</b><span>{{ dept.description }}</span>
+            </div>
+            <div class="row">
+                <b>Email</b><span>{{ dept.email }}</span>
+            </div>
+            <div class="row">
+                <b>Phone Number</b><span>{{ dept.phoneNumber }}</span>
+            </div>
+            <div class="row">
+                <b>Active</b><span>{{ dept.isActive ? 'Yes' : 'No' }}</span>
+            </div>
+            <div class="row">
+                <b>Employee Count</b><span>{{ dept.employeeCount }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="details-footer">
+        <p-button icon="pi pi-arrow-left" label="Back" severity="danger" [outlined]="true" (onClick)="back()"></p-button>
+    </div>
+</div>

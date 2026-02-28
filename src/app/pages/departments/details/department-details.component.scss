@@ -1,0 +1,9 @@
+:host { --blue:#1f3b6d; display:block; }
+
+.ui-card { border-radius:14px; overflow:hidden; margin-bottom:1rem; }
+.bar { background:var(--blue); color:#fff; padding:0.9rem 1rem; font-weight:600; font-size:1.05rem; }
+
+.rows { background:#fff; }
+.row { display:flex; justify-content:space-between; gap:2rem; padding:0.95rem 1rem; border-bottom:1px solid #e6eaf2; }
+
+.details-footer { display:flex; justify-content:flex-start; margin-top:1rem; }

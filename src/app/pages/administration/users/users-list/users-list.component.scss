@@ -1,0 +1,128 @@
+:host {
+  --blue: #1f3b6d;
+  --red: #d9534f;
+  display: block;
+}
+
+.ui-card {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.bar {
+  background: var(--blue);
+  color: #fff;
+  padding: 0.9rem 1rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.body {
+  padding: 1rem;
+  background: #fff;
+}
+
+/* ✅ fallback so inputs are ALWAYS side-by-side */
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (max-width: 1200px) {
+  .filter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* optional: remove extra spacing */
+.field {
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.bar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.icon-btn {
+  width: 2.6rem;
+  height: 2.6rem;
+}
+
+.export {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* ✅ search icon spacing like screenshot */
+.searchwrap {
+  position: relative;
+  width: 330px;
+}
+.searchwrap i {
+  position: absolute;
+  left: 0.95rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.9;
+}
+.searchwrap input {
+  width: 100%;
+  padding-left: 2.6rem !important;
+}
+
+/* ✅ row icons */
+.actions-col { white-space: nowrap; }
+.action-btn {
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0 !important;
+  margin-left: 0.35rem;
+  border-radius: 999px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.action-btn:hover { background: rgba(31, 59, 109, 0.08) !important; }
+
+.info :global(.pi) { color: #2563eb; }
+.edit :global(.pi) { color: #1f3b6d; }
+.del  :global(.pi) { color: #dc2626; }
+.shield :global(.pi) { color: #1f3b6d; }
+
+:host ::ng-deep .action-btn {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 999px;
+}
+
+:host ::ng-deep .action-btn .pi {
+  font-size: 1.1rem;
+}
+
+:host ::ng-deep .info .pi { color: #2563eb; }
+:host ::ng-deep .edit .pi { color: #1f3b6d; }
+:host ::ng-deep .del .pi  { color: #dc2626; }
+:host ::ng-deep .shield .pi { color: #1f3b6d; }

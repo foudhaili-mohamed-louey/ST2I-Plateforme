@@ -1,0 +1,47 @@
+<div *ngIf="user">
+  <div class="card ui-card">
+    <div class="bar">User Information</div>
+    <div class="rows">
+      <div class="row"><b>Last Name</b><span>{{ user.lastName }}</span></div>
+      <div class="row"><b>First Name</b><span>{{ user.firstName }}</span></div>
+      <div class="row"><b>Sex</b><span>{{ user.sex }}</span></div>
+      <div class="row"><b>Birth Date</b><span>{{ user.hireDate || '-' }}</span></div>
+      <div class="row"><b>Birth Place</b><span>{{ user.birthPlace || '-' }}</span></div>
+      <div class="row"><b>Nationality</b><span>{{ user.nationality || '-' }}</span></div>
+      <div class="row"><b>CIN</b><span>{{ user.cin }}</span></div>
+      <div class="row"><b>Passport Number</b><span>{{ user.passportNumber || '-' }}</span></div>
+      <div class="row"><b>Unique Identifier</b><span>{{ user.identifiantUnique || '-' }}</span></div>
+    </div>
+  </div>
+
+  <div class="card ui-card">
+    <div class="bar">Work Information</div>
+    <div class="rows">
+      <div class="row"><b>Profession</b><span>{{ user.profession }}</span></div>
+      <div class="row"><b>Department</b><span>{{ user.department }}</span></div>
+    </div>
+  </div>
+
+  <div class="card ui-card">
+    <div class="bar">Residence Information</div>
+    <div class="rows">
+      <div class="row"><b>Governorate</b><span>{{ user.residence?.governorate || '-' }}</span></div>
+      <div class="row"><b>Delegation</b><span>{{ user.residence?.delegation || '-' }}</span></div>
+      <div class="row"><b>Office</b><span>{{ user.residence?.bureau || '-' }}</span></div>
+      <div class="row"><b>Postal Code</b><span>{{ user.residence?.postalCode || '-' }}</span></div>
+      <div class="row"><b>Residencial Address</b><span>{{ user.residence?.address || '-' }}</span></div>
+    </div>
+  </div>
+
+  <div class="card ui-card">
+    <div class="bar">Contact Information</div>
+    <div class="rows">
+      <div class="row"><b>Email Address</b><span>{{ user.email }}</span></div>
+      <div class="row"><b>Phone Number</b><span>{{ user.phone }}</span></div>
+    </div>
+  </div>
+
+  <div class="details-footer">
+    <p-button icon="pi pi-arrow-left" label="Back" severity="danger" [outlined]="true" (onClick)="back()"></p-button>
+  </div>
+</div>

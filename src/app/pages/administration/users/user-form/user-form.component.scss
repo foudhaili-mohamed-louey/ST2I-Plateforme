@@ -1,0 +1,73 @@
+:host { --blue:#1f3b6d; display:block; }
+
+.ui-card { border-radius:14px; overflow:hidden; }
+.bar { background:var(--blue); color:#fff; padding:0.9rem 1rem; font-weight:600; font-size:1.05rem; }
+
+.block { padding: 1.3rem 1.1rem; background:#fff; }
+.block-title {
+  font-weight: 700;
+  color: var(--blue);
+  padding-bottom: 0.55rem;
+  margin-bottom: 1.1rem;
+  border-bottom: 2px solid var(--blue);
+}
+
+.field { margin-bottom: 1.1rem; }
+label { display:block; font-weight:600; margin-bottom: 0.45rem; color:#1f2937; }
+
+/* ✅ FORCE 3 columns like your screenshot */
+.formgrid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(240px, 1fr));
+  gap: 1rem;
+}
+@media (max-width: 992px) {
+  .formgrid3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .formgrid3 { grid-template-columns: 1fr; }
+}
+
+.span2 { grid-column: span 2; }
+@media (max-width: 992px) { .span2 { grid-column: span 2; } }
+@media (max-width: 640px) { .span2 { grid-column: span 1; } }
+
+select.p-inputtext, input[type="date"].p-inputtext {
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid #dbe4f3;
+  background: #fff;
+  width: 100%;
+}
+
+textarea.p-inputtext { border-radius: 10px; }
+
+.roles-grid {
+  display:grid;
+  grid-template-columns: repeat(5, minmax(180px, 1fr));
+  gap: 0.9rem;
+}
+@media (max-width: 992px) { .roles-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px) { .roles-grid { grid-template-columns: 1fr; } }
+
+.role-pill {
+  display:flex;
+  align-items:center;
+  gap: 0.7rem;
+  border: 1px solid #dbe4f3;
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  background:#fff;
+}
+
+/* ✅ sticky footer like your screenshot bottom-right */
+.footer-sticky {
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  border-top: 1px solid #e6eaf2;
+  padding: 1rem 1.1rem;
+  display:flex;
+  justify-content:flex-end;
+  gap: 0.9rem;
+}
