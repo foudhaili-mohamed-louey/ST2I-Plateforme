@@ -1,0 +1,33 @@
+:host { --blue:#1f3b6d; display:block; }
+
+.ui-card { border-radius:14px; overflow:hidden; }
+.bar { background:var(--blue); color:#fff; padding:0.9rem 1rem; font-weight:600; font-size:1.05rem; }
+.bar-row { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+
+.body { padding: 1rem; background:#fff; }
+
+.filter-grid {
+  display:grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap: 1rem;
+}
+@media (max-width: 992px) { .filter-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .filter-grid { grid-template-columns: 1fr; } }
+
+.actions { display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.85rem; }
+
+select.p-inputtext { padding:0.75rem; border-radius:10px; border:1px solid #dbe4f3; width:100%; }
+
+.bar-right { display:flex; align-items:center; gap:0.75rem; }
+.searchwrap { position: relative; width: 330px; }
+.searchwrap i { position:absolute; left:0.95rem; top:50%; transform:translateY(-50%); opacity:0.9; }
+.searchwrap input { width:100%; padding-left:2.6rem !important; }
+
+:host ::ng-deep .icon-btn { width:2.6rem; height:2.6rem; }
+:host ::ng-deep .export { border:1px solid rgba(255,255,255,0.35); }
+
+.actions-col { white-space:nowrap; }
+:host ::ng-deep .action-btn { width:2.2rem; height:2.2rem; border-radius:999px; }
+:host ::ng-deep .info .pi { color:#2563eb; }
+:host ::ng-deep .edit .pi { color:#1f3b6d; }
+:host ::ng-deep .del  .pi { color:#dc2626; }

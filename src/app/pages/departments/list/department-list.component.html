@@ -1,0 +1,79 @@
+<div class="card ui-card">
+    <div class="bar">Search Filters</div>
+
+    <div class="body">
+        <div class="filter-grid">
+            <div class="field">
+                <input pInputText placeholder="Code" [(ngModel)]="filters.code" />
+            </div>
+
+            <div class="field">
+                <input pInputText placeholder="Name" [(ngModel)]="filters.name" />
+            </div>
+
+            <div class="field">
+                <input pInputText placeholder="Local" [(ngModel)]="filters.local" />
+            </div>
+
+            <div class="field">
+                <select class="p-inputtext w-full" [(ngModel)]="filters.isActive">
+                    <option [ngValue]="''">Status</option>
+                    <option [ngValue]="true">Active</option>
+                    <option [ngValue]="false">Inactive</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="actions">
+            <p-button icon="pi pi-search" label="Search" (onClick)="search()"></p-button>
+            <p-button icon="pi pi-refresh" label="Reset" severity="danger" [outlined]="true" (onClick)="reset()"></p-button>
+        </div>
+    </div>
+</div>
+
+<div class="card ui-card">
+    <div class="bar bar-row">
+        <div class="bar-title">List of Departments</div>
+
+        <div class="bar-right">
+            <p-button icon="pi pi-plus" [rounded]="true" (onClick)="add()" styleClass="icon-btn"></p-button>
+            <p-button icon="pi pi-upload" [rounded]="true" (onClick)="export()" styleClass="icon-btn export"></p-button>
+
+            <div class="searchwrap">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Filter among these elements..." />
+            </div>
+        </div>
+    </div>
+
+    <p-table #dt [value]="rows" [paginator]="true" [rows]="10" [loading]="loading" [globalFilterFields]="['code', 'name', 'local', 'email', 'phoneNumber']">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Local</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Employees</th>
+                <th style="width: 180px">Actions</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-d>
+            <tr>
+                <td>{{ d.code }}</td>
+                <td>{{ d.name }}</td>
+                <td>{{ d.local }}</td>
+                <td>{{ d.email }}</td>
+                <td>{{ d.phoneNumber }}</td>
+                <td>{{ d.employeeCount }}</td>
+
+                <td class="text-right actions-col">
+                    <p-button icon="pi pi-info-circle" [text]="true" (onClick)="details(d)" styleClass="action-btn info"></p-button>
+                    <p-button icon="pi pi-pencil" [text]="true" (onClick)="edit(d)" styleClass="action-btn edit"></p-button>
+                    <p-button icon="pi pi-trash" [text]="true" (onClick)="delete(d)" styleClass="action-btn del"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

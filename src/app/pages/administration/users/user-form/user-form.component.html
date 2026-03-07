@@ -1,0 +1,112 @@
+<div class="card ui-card">
+  <div class="bar">{{ isEdit ? 'Modifier Utilisateur' : 'Ajouter Utilisateur' }}</div>
+
+  <div class="block">
+    <div class="block-title">Informations sur l'utilisateur</div>
+
+    <div class="formgrid3">
+      <div class="field">
+        <label>Nom *</label>
+        <input pInputText placeholder="Nom *" [(ngModel)]="form.lastName" />
+      </div>
+
+      <div class="field">
+        <label>Prénom *</label>
+        <input pInputText placeholder="Prénom *" [(ngModel)]="form.firstName" />
+      </div>
+
+      <div class="field">
+        <label>Date de naissance *</label>
+        <input class="p-inputtext w-full" type="date" [(ngModel)]="form.hireDate" />
+      </div>
+
+      <div class="field">
+        <label>Lieu de naissance</label>
+        <input pInputText placeholder="Lieu de naissance" [(ngModel)]="form.birthPlace" />
+      </div>
+
+      <div class="field">
+        <label>Nationalité *</label>
+        <select class="p-inputtext w-full" [(ngModel)]="form.nationality">
+          <option value="" disabled>Nationalité *</option>
+          <option *ngFor="let n of nationalityOptions" [value]="n">{{ n }}</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Numéro de passeport</label>
+        <input pInputText placeholder="Numéro de passeport" [(ngModel)]="form.passportNumber" />
+      </div>
+
+      <div class="field">
+        <label>Sexe *</label>
+        <select class="p-inputtext w-full" [(ngModel)]="form.sex">
+          <option value="" disabled>Sexe *</option>
+          <option *ngFor="let s of sexOptions" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Profession</label>
+        <input pInputText placeholder="Profession" [(ngModel)]="form.profession" />
+      </div>
+
+      <div class="field">
+        <label>Departement</label>
+        <input pInputText placeholder="Departement" [(ngModel)]="form.department" />
+      </div>
+      
+      <div class="field">
+        <label>Identifiant unique *</label>
+        <input pInputText placeholder="Identifiant unique *" [(ngModel)]="form.identifiantUnique" />
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-title">Informations de résidence</div>
+
+    <div class="formgrid3">
+      <div class="field">
+        <label>Gouvernorat</label>
+        <input pInputText placeholder="Gouvernorat" [(ngModel)]="form.residence!.governorate" />
+      </div>
+
+      <div class="field">
+        <label>Délégation</label>
+        <input pInputText placeholder="Délégation" [(ngModel)]="form.residence!.delegation" />
+      </div>
+
+      <div class="field">
+        <label>Office</label>
+        <input pInputText placeholder="Office" [(ngModel)]="form.residence!.bureau" />
+      </div>
+
+      <div class="field">
+        <label>Code Postal</label>
+        <input pInputText placeholder="Code Postal" [(ngModel)]="form.residence!.postalCode" />
+      </div>
+
+      <div class="field span2">
+        <label>Adresse de Résidence</label>
+        <textarea class="p-inputtext w-full" rows="3" placeholder="Adresse de Résidence" [(ngModel)]="form.residence!.address"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-title">Roles</div>
+
+    <div class="roles-grid">
+      <label class="role-pill" *ngFor="let r of roles">
+        <input type="checkbox" [checked]="selectedRoles.includes(r)" (change)="toggleRole(r)" />
+        <span>{{ r }}</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="footer-sticky">
+  <p-button icon="pi pi-save" label="Sauvgarder" (onClick)="save()" severity="info"></p-button>
+  <p-button icon="pi pi-arrow-left" label="Retour" severity="danger" [outlined]="true" (onClick)="back()"></p-button>
+</div>
+</div>

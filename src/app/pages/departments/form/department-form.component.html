@@ -1,0 +1,54 @@
+<div class="card ui-card">
+    <div class="bar">{{ isEdit ? 'Update Department' : 'Add Department' }}</div>
+
+    <div class="block">
+        <div class="block-title">Department Information</div>
+
+        <div class="formgrid3">
+            <div class="field">
+                <label>Code *</label>
+                <input pInputText [(ngModel)]="form.code" />
+            </div>
+
+            <div class="field">
+                <label>Name *</label>
+                <input pInputText [(ngModel)]="form.name" />
+            </div>
+
+            <div class="field">
+                <label>Local</label>
+                <input pInputText [(ngModel)]="form.local" />
+            </div>
+
+            <div class="field span3">
+                <label>Description</label>
+                <textarea class="p-inputtext w-full" rows="3" [(ngModel)]="form.description"></textarea>
+            </div>
+
+            <div class="field">
+                <label>Email</label>
+                <input pInputText [(ngModel)]="form.email" />
+            </div>
+
+            <div class="field">
+                <label>Phone Number</label>
+                <input pInputText [(ngModel)]="form.phoneNumber" />
+            </div>
+
+            <div class="field">
+                <label>Employee Count</label>
+                <input class="p-inputtext w-full" type="number" [(ngModel)]="form.employeeCount" />
+            </div>
+
+            <div class="field active-row">
+                <p-checkbox [(ngModel)]="form.isActive" binary="true"></p-checkbox>
+                <span>Active</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-sticky">
+        <p-button icon="pi pi-save" label="Save" (onClick)="save()"></p-button>
+        <p-button icon="pi pi-arrow-left" label="Back" severity="danger" [outlined]="true" (onClick)="back()"></p-button>
+    </div>
+</div>
