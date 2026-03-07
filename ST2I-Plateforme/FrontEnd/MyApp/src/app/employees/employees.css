@@ -1,0 +1,139 @@
+/* OVERVIEW CARDS */
+.overview-card {
+  padding: 18px;
+  height: 120px;
+  border-radius: 14px;
+}
+
+/* Big icons */
+.icon-big {
+  font-size: 38px;
+  opacity: 0.85;
+}
+
+/* Fake donut chart */
+.donut {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: conic-gradient(#0d6efd 61%, #e83e8c 39%);
+}
+
+/* EMPLOYEES TOOLBAR */
+.employees-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  flex-wrap: wrap;
+}
+
+.left-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.search-input {
+  width: 220px;
+}
+
+.right-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-input {
+  width: 160px;
+}
+
+/* TABLE */
+.table-scroll {
+  max-height: 460px;
+  overflow-y: auto;
+}
+
+.modern-table thead {
+  background: #f8f9fa;
+}
+
+.modern-table th {
+  font-weight: 600;
+  font-size: 14px;
+  position: sticky;
+  top: 0;
+  background: #f8f9fa;
+  z-index: 2;
+}
+
+.employee-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.employee-cell img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.icon-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(13, 110, 253, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-circle i {
+  font-size: 22px;
+  color: #0d6efd;
+}
+/* Clickable cards */
+.clickable {
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+.clickable:hover {
+  transform: translateY(-2px);
+}
+
+/* Toolbar polish */
+.search-input,
+.filter-input {
+  height: 38px;
+}
+
+/* Optional: make table checkboxes a bit cleaner */
+.modern-table input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+}
+/* Clickable overview cards */
+.clickable {
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+.clickable:hover {
+  transform: translateY(-2px);
+}
+
+/* Modal backdrop (Angular modal) */
+.modal-backdrop-custom {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1040;
+}
+.modal.d-block {
+  z-index: 1050;
+}
