@@ -1,0 +1,79 @@
+<!-- ===== LOADING ===== -->
+<div *ngIf="loading" class="card ui-card">
+  <div class="bar">Chargement...</div>
+  <div class="loading-msg">
+    <i class="pi pi-spin pi-spinner"></i>
+    Chargement des données...
+  </div>
+</div>
+
+<!-- ===== NOT FOUND ===== -->
+<div *ngIf="!loading && !dept" class="card ui-card">
+  <div class="bar">Département introuvable</div>
+  <div class="loading-msg">
+    <i class="pi pi-exclamation-triangle" style="color:#dc2626"></i>
+    Aucun département trouvé.
+  </div>
+</div>
+
+<!-- ===== DEPARTMENT DETAILS ===== -->
+<div *ngIf="!loading && dept">
+
+  <!-- ===== GENERAL INFO ===== -->
+  <div class="card ui-card">
+    <div class="bar">Informations Générales</div>
+
+    <div class="row">
+      <b>Nom</b>
+      <span>{{ dept.name }}</span>
+    </div>
+    <div class="row">
+      <b>Code</b>
+      <span class="code-badge">{{ dept.code }}</span>
+    </div>
+    <div class="row">
+      <b>Description</b>
+      <span>{{ dept.description || '—' }}</span>
+    </div>
+    <div class="row">
+      <b>Statut</b>
+      <span class="status-badge"
+            [class.active]="dept.active"
+            [class.inactive]="!dept.active">
+        {{ dept.active ? 'Actif' : 'Inactif' }}
+      </span>
+    </div>
+    <div class="row">
+      <b>Nombre d'employés</b>
+      <span class="count-badge">{{ dept.employeeCount }}</span>
+    </div>
+  </div>
+
+  <!-- ===== LOCATION & CONTACT ===== -->
+  <div class="card ui-card">
+    <div class="bar">Localisation & Contact</div>
+
+    <div class="row">
+      <b>Localisation</b>
+      <span>{{ dept.location || '—' }}</span>
+    </div>
+    <div class="row">
+      <b>Adresse Email</b>
+      <span>{{ dept.email || '—' }}</span>
+    </div>
+    <div class="row">
+      <b>Numéro de Téléphone</b>
+      <span>{{ dept.phoneNumber || '—' }}</span>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div class="details-footer">
+    <p-button icon="pi pi-pencil"
+              label="Modifier"
+              severity="info"
+              (onClick)="edit()">
+    </p-button>
+  </div>
+
+</div>

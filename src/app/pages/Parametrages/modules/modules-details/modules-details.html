@@ -1,0 +1,34 @@
+<p-toast></p-toast>
+
+<div class="modules-details-container">
+
+  <div class="ui-card details-card" *ngIf="module">
+
+    <div class="bar">
+      Module Details
+    </div>
+
+    <div class="block">
+
+      <div class="details-field">
+        <label>ID</label>
+        <span>{{ module.id }}</span>
+      </div>
+
+      <div class="details-field">
+        <label>Name</label>
+        <span>{{ module.name }}</span>
+      </div>
+
+      <div class="buttons">
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="!module" class="loading">
+    <p>Loading module details...</p>
+  </div>
+
+</div>

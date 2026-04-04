@@ -1,0 +1,47 @@
+<p-toast></p-toast>
+
+<div class="modules-form-container">
+
+  <div class="form-card">
+
+    <h2>Create Module</h2>
+
+    <div class="form-field">
+
+      <label>Module Name</label>
+
+      <input
+        pInputText
+        type="text"
+        [(ngModel)]="module.name"
+        placeholder="Enter module name"
+      />
+
+    </div>
+
+    <div class="buttons">
+
+      <button
+        pButton
+        type="button"
+        label="Create"
+        icon="pi pi-check"
+        class="p-button-success"
+        [loading]="loading"
+        (click)="createModule()">
+      </button>
+
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-secondary"
+        (click)="cancel()">
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,79 @@
+<div class="card ui-card">
+    <div class="bar">Filtre de recherche</div>
+
+    <div class="body">
+        <div class="filter-grid">
+            <div class="field">
+                <input pInputText placeholder="Nom" [(ngModel)]="filters.name" />
+            </div>
+            <div class="field">
+                <input pInputText placeholder="Code" [(ngModel)]="filters.code" />
+            </div>
+            <div class="field">
+                <input pInputText placeholder="Client" [(ngModel)]="filters.clientName" />
+            </div>
+            <div class="field">
+                <select class="p-inputtext w-full" [(ngModel)]="filters.isActive">
+                    <option [ngValue]="''">Statut</option>
+                    <option [ngValue]="true">Actif</option>
+                    <option [ngValue]="false">Inactif</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="actions">
+            <p-button icon="pi pi-search" label="Rechercher" (onClick)="search()"></p-button>
+            <p-button icon="pi pi-refresh" label="Réinitialiser" severity="danger" [outlined]="true" (onClick)="reset()"></p-button>
+        </div>
+    </div>
+</div>
+
+<div class="card ui-card">
+    <div class="bar bar-row">
+        <div class="bar-title">Liste projets</div>
+
+        <div class="bar-right">
+            <p-button icon="pi pi-plus" [rounded]="true" (onClick)="add()" styleClass="icon-btn"></p-button>
+            <p-button icon="pi pi-upload" [rounded]="true" (onClick)="export()" styleClass="icon-btn export"></p-button>
+
+            <div class="searchwrap">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" #globalFilter (input)="dt.filterGlobal(globalFilter.value, 'contains')" placeholder="Filtrer parmis ces éléments..." />
+            </div>
+        </div>
+    </div>
+
+    <p-table #dt [value]="rows" [paginator]="true" [rows]="10" [loading]="loading" [globalFilterFields]="['name', 'code', 'clientName', 'description']">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Code</th>
+                <th>Nom</th>
+                <th>Début</th>
+                <th>Fin</th>
+                <th>Actif</th>
+                <th style="width: 170px">Actions</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-p>
+            <tr>
+                <td>{{ p.code }}</td>
+                <td>{{ p.name }}</td>
+                <td>{{ p.startDate }}</td>
+                <td>{{ p.endDate }}</td>
+                <td>{{ p.isActive ? 'Oui' : 'Non' }}</td>
+
+                <td class="text-right actions-col">
+                    <p-button icon="pi pi-info-circle" [text]="true" (onClick)="details(p)" styleClass="action-btn info" pTooltip="Détails"></p-button>
+                    <p-button icon="pi pi-pencil" [text]="true" (onClick)="edit(p)" styleClass="action-btn edit" pTooltip="Modifier"></p-button>
+                    <p-button icon="pi pi-trash" [text]="true" (onClick)="delete(p)" styleClass="action-btn del" pTooltip="Supprimer"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="9" class="empty-msg">Aucun projet trouvé.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

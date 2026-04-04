@@ -1,0 +1,46 @@
+.modules-form-container {
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+
+}
+
+.form-card {
+
+  width: 450px;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+}
+
+.form-card h2 {
+
+  margin-bottom: 25px;
+
+}
+
+.form-field {
+
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+}
+
+.form-field label {
+
+  font-weight: 600;
+  margin-bottom: 8px;
+
+}
+
+.buttons {
+
+  display: flex;
+  gap: 15px;
+
+}

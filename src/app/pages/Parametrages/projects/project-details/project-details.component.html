@@ -1,0 +1,35 @@
+<div *ngIf="project">
+    <div class="card ui-card">
+        <div class="bar">Informations projet</div>
+        <div class="rows">
+            <div class="row">
+                <b>Nom</b><span>{{ project.name }}</span>
+            </div>
+            <div class="row">
+                <b>Code</b><span>{{ project.code }}</span>
+            </div>
+            <div class="row">
+                <b>Client</b><span>{{ project.clientName }}</span>
+            </div>
+            <div class="row">
+                <b>Description</b><span>{{ project.description }}</span>
+            </div>
+            <div class="row">
+                <b>Date début</b><span>{{ project.startDate }}</span>
+            </div>
+            <div class="row">
+                <b>Date fin</b><span>{{ project.endDate }}</span>
+            </div>
+            <div class="row">
+                <b>Budget</b><span>{{ project.budget }}</span>
+            </div>
+            <div class="row">
+                <b>Actif</b><span>{{ project.isActive ? 'Oui' : 'Non' }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="details-footer">
+        <p-button icon="pi pi-arrow-left" label="Retour" severity="danger" [outlined]="true" (onClick)="back()"></p-button>
+    </div>
+</div>

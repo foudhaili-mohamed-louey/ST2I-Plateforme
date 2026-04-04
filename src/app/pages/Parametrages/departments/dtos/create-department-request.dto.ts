@@ -1,0 +1,8 @@
+export interface CreateDepartmentRequestDTO {
+  name: string;
+  code: string;
+  description: string;
+  location: string;
+  phoneNumber: string;
+  email: string;
+}

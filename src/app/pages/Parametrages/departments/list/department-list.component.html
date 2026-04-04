@@ -1,0 +1,204 @@
+<p-toast position="top-right"></p-toast>
+
+<!-- ===== DELETE CONFIRM DIALOG ===== -->
+<div class="confirm-overlay" *ngIf="showDeleteConfirm" (click)="cancelDelete()">
+  <div class="confirm-dialog" (click)="$event.stopPropagation()">
+
+    <div class="confirm-header">
+      <i class="pi pi-exclamation-triangle"></i>
+      <span>Confirmer la suppression</span>
+    </div>
+
+    <div class="confirm-dept-info" *ngIf="deptToDelete">
+      <span class="confirm-dept-name">{{ deptToDelete.name }}</span>
+      <span class="confirm-dept-code">Code : {{ deptToDelete.code }}</span>
+    </div>
+
+    <div class="confirm-warning-box">
+      <strong>Attention — cette action est irréversible</strong>
+      <ul>
+        <li>Le département sera définitivement supprimé</li>
+        <li>Tous les employés liés perdront leur affectation</li>
+        <li>Cette action ne peut pas être annulée</li>
+      </ul>
+    </div>
+
+    <div class="confirm-actions">
+      <p-button icon="pi pi-trash"
+                label="Supprimer"
+                severity="danger"
+                [loading]="deleting"
+                (onClick)="confirmDelete()">
+      </p-button>
+      <p-button icon="pi pi-times"
+                label="Annuler"
+                severity="secondary"
+                [outlined]="true"
+                [disabled]="deleting"
+                (onClick)="cancelDelete()">
+      </p-button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== FILTER CARD ===== -->
+<div class="card ui-card">
+  <div class="bar">Filtres de recherche</div>
+
+  <div class="body">
+    <div class="filter-grid">
+
+      <div class="field">
+        <input pInputText
+               placeholder="Nom du département"
+               [(ngModel)]="filters.name" />
+      </div>
+
+      <div class="field">
+        <input pInputText
+               placeholder="Code"
+               [(ngModel)]="filters.code" />
+      </div>
+
+      <div class="field">
+        <input pInputText
+               placeholder="Localisation"
+               [(ngModel)]="filters.location" />
+      </div>
+
+      <div class="field">
+        <select class="p-inputtext" [(ngModel)]="filters.status">
+          <option value="">Statut</option>
+          <option value="active">Actif</option>
+          <option value="inactive">Non Actif</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="actions">
+      <p-button icon="pi pi-search"
+                label="Rechercher"
+                (onClick)="search()"
+                severity="info">
+      </p-button>
+      <p-button icon="pi pi-refresh"
+                label="Réinitialiser"
+                severity="danger"
+                [outlined]="true"
+                (onClick)="reset()">
+      </p-button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TABLE CARD ===== -->
+<div class="card ui-card">
+  <div class="bar bar-row">
+    <div class="bar-title">Liste des départements</div>
+
+    <div class="bar-right">
+      <p-button icon="pi pi-plus"
+                [rounded]="true"
+                (onClick)="add()"
+                styleClass="icon-btn"
+                pTooltip="Ajouter un département">
+      </p-button>
+
+      <p-button icon="pi pi-upload"
+                [rounded]="true"
+                (onClick)="export()"
+                styleClass="icon-btn export"
+                pTooltip="Exporter CSV">
+      </p-button>
+
+      <div class="searchwrap">
+        <i class="pi pi-search"></i>
+        <input pInputText
+               type="text"
+               #globalFilter
+               (input)="dt.filterGlobal(globalFilter.value, 'contains')"
+               placeholder="Filtrer..." />
+      </div>
+    </div>
+  </div>
+
+  <p-table
+      #dt
+      [value]="rows"
+      [paginator]="true"
+      [rows]="10"
+      [loading]="loading"
+      [globalFilterFields]="['id','name','code','location','phoneNumber','email']">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Nom</th>
+        <th>Code</th>
+        <th>Employés</th>
+        <th>Statut</th>
+        <th style="width: 160px">Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-d>
+      <tr>
+        <td>{{ d.name }}</td>
+        <td>
+          <span class="code-badge">{{ d.code }}</span>
+        </td>
+        <td>
+          <span class="count-badge">{{ d.employeeCount }}</span>
+        </td>
+        <td>
+          <span class="status-badge"
+                [class.active]="d.active"
+                [class.inactive]="!d.active">
+            {{ d.active ? 'Actif' : 'Inactif' }}
+          </span>
+        </td>
+
+        <td class="actions-col">
+          <p-button icon="pi pi-info-circle"
+                    [text]="true"
+                    (onClick)="details(d)"
+                    styleClass="action-btn info"
+                    pTooltip="Détails">
+          </p-button>
+
+          <p-button icon="pi pi-pencil"
+                    [text]="true"
+                    (onClick)="edit(d)"
+                    styleClass="action-btn edit"
+                    pTooltip="Modifier">
+          </p-button>
+
+          <p-button icon="pi pi-trash"
+                    [text]="true"
+                    (onClick)="delete(d)"
+                    styleClass="action-btn del"
+                    pTooltip="Supprimer">
+          </p-button>
+
+          <p-button
+                    [icon]="d.active ? 'pi pi-ban' : 'pi pi-check-circle'"
+                    [text]="true"
+                    (onClick)="toggleActive(d)"
+                    [styleClass]="d.active ? 'action-btn deactivate' : 'action-btn activate'"
+                    [pTooltip]="d.active ? 'Désactiver' : 'Activer'">
+          </p-button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="9" class="empty-msg">
+          Aucun département trouvé.
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</div>
