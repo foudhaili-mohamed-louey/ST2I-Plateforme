@@ -1,0 +1,45 @@
+<div class="card ui-card">
+  <div class="bar">Modifier le profil</div>
+
+  <div class="form-grid">
+    <div class="field">
+      <label>Nom</label>
+      <input pInputText [(ngModel)]="form.lastName" />
+    </div>
+
+    <div class="field">
+      <label>Prénom</label>
+      <input pInputText [(ngModel)]="form.firstName" />
+    </div>
+    <div class="field">
+      <label>UserName</label>
+      <input pInputText [(ngModel)]="form.username" />
+    </div>
+
+    <div class="field">
+      <label>Email</label>
+      <input pInputText [(ngModel)]="form.email" />
+    </div>
+
+    <div class="field">
+      <label>Téléphone</label>
+      <input pInputText [(ngModel)]="form.phone" />
+    </div>
+  </div>
+
+  <div class="details-footer">
+    <p-button
+      icon="pi pi-check"
+      label="Sauvgarder"
+      (onClick)="submit()">
+    </p-button>
+
+    <p-button
+      icon="pi pi-times"
+      label="Annuler"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="cancel.emit()">
+    </p-button>
+  </div>
+</div>

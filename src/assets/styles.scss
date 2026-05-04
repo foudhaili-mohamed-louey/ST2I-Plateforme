@@ -1,3 +1,12 @@
 @use 'primeicons/primeicons.css';
 @use '@/assets/layout/layout.scss';
 @use '@/assets/demo/demo.scss';
+
+.p-breadcrumb {
+  display: inline-block; /* key fix */
+  width: fit-content;    /* shrink to content */
+  background: #f5f7fb;   /* light background like your example */
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}

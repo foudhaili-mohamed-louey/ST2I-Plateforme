@@ -1,0 +1,28 @@
+.stat-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+
+    i {
+        font-size: 1.25rem;
+    }
+
+    &.blue {
+        background: #dbeafe;
+        color: #2563eb;
+    }
+
+    &.orange {
+        background: #ffedd5;
+        color: #ea580c;
+    }
+
+    &.green {
+        background: #dcfce7;
+        color: #16a34a;
+    }
+
+    &.purple {
+        background: #ede9fe;
+        color: #7c3aed;
+    }
+}

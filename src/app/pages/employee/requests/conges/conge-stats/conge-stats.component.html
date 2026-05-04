@@ -1,0 +1,23 @@
+<div class="grid grid-cols-12 gap-6">
+    <div class="col-span-12 md:col-span-6 xl:col-span-3" *ngFor="let stat of stats">
+        <div class="card mb-0">
+            <div class="flex justify-between mb-4">
+                <div>
+                    <span class="block text-muted-color font-medium mb-4">
+                        {{ stat.title }}
+                    </span>
+
+                    <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">
+                        {{ stat.value }}
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-center rounded-border stat-icon" [ngClass]="stat.color">
+                    <i [class]="stat.icon"></i>
+                </div>
+            </div>
+
+            <span class="text-primary font-medium">{{ stat.subtitle }}</span>
+        </div>
+    </div>
+</div>

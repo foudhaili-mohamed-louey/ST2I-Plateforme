@@ -1,0 +1,16 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1f3b6d;
+    margin: 0;
+}
+
+.page-subtitle {
+    color: #6b7280;
+    font-size: 0.9rem;
+}

@@ -8,15 +8,31 @@ import { InputText } from 'primeng/inputtext';
 
 import { TracabilityService } from './tracability.service';
 import { TraceRow, HttpMethod } from './tracability.model';
+import { BreadcrumbModule } from "primeng/breadcrumb";
+import { MenuItem } from "primeng/api";
+
 
 @Component({
     selector: 'app-tracability',
     standalone: true,
     templateUrl: './tracability.component.html',
     styleUrls: ['./tracability.component.scss'],
-    imports: [CommonModule, FormsModule, TableModule, Button, InputText]
+    imports: [CommonModule, FormsModule, TableModule, Button, InputText, BreadcrumbModule]
 })
 export class TracabilityComponent implements OnInit {
+
+    home: MenuItem = {
+        label: 'Accueil',
+        icon: 'pi pi-home',
+        routerLink: '/'
+    };
+
+    items: MenuItem[] = [
+        {
+            label: 'Tracabilité'
+        }
+    ];
+
     rows: TraceRow[] = [];
     loading = false;
 
@@ -90,4 +106,6 @@ export class TracabilityComponent implements OnInit {
         a.click();
         URL.revokeObjectURL(url);
     }
+
+    
 }

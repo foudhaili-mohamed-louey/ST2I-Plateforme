@@ -1,0 +1,22 @@
+<div *ngIf="loading" class="card ui-card">
+  <div class="bar">Chargement...</div>
+  <div class="loading-msg">
+    <i class="pi pi-spin pi-spinner"></i>
+    Chargement des données...
+  </div>
+</div>
+
+<div *ngIf="!loading && user">
+  <app-profil-details
+    *ngIf="!editMode"
+    [user]="user"
+    (edit)="showUpdateForm()">
+  </app-profil-details>
+
+  <app-profil-update
+    *ngIf="editMode"
+    [user]="user"
+    (cancel)="cancelUpdate()"
+    (save)="saveProfile($event)">
+  </app-profil-update>
+</div>

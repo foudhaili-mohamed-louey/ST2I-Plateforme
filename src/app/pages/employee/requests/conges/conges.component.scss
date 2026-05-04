@@ -1,0 +1,19 @@
+.conges-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.page-header {
+    h2 {
+        color: #1f3b6d;
+        font-weight: 700;
+        font-size: 1.6rem;
+        margin: 0;
+    }
+
+    span {
+        color: #6b7280;
+        font-size: 0.95rem;
+    }
+}

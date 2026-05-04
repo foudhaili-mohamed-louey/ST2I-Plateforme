@@ -1,0 +1,36 @@
+<div class="card">
+    <div class="font-semibold text-xl mb-4">Nouvelle demande de congé</div>
+
+    <div class="form-grid">
+        <div class="field">
+            <label>Type de congé</label>
+            <p-select [options]="leaveTypes" optionLabel="name" optionValue="id" [(ngModel)]="form.leaveTypeId" placeholder="Choisir un type" class="w-full"> </p-select>
+        </div>
+
+        <div class="field">
+            <label>Date début</label>
+            <p-datepicker [(ngModel)]="form.startDate" dateFormat="dd/mm/yy" placeholder="Choisir la date début" class="w-full"> </p-datepicker>
+        </div>
+
+        <div class="field">
+            <label>Date fin</label>
+            <p-datepicker [(ngModel)]="form.endDate" dateFormat="dd/mm/yy" placeholder="Choisir la date fin" class="w-full"> </p-datepicker>
+        </div>
+
+        <div class="field">
+            <label>Motif</label>
+            <input pInputText [(ngModel)]="form.reason" placeholder="Ex: repos, maladie..." />
+        </div>
+
+        <div class="field full">
+            <label>Description</label>
+            <textarea pTextarea rows="4" [(ngModel)]="form.description" placeholder="Ajouter une description..."></textarea>
+        </div>
+    </div>
+
+    <div class="actions">
+        <p-button label="Envoyer" icon="pi pi-send" (onClick)="submit()"> </p-button>
+
+        <p-button label="Réinitialiser" icon="pi pi-refresh" severity="secondary" [outlined]="true" (onClick)="reset()"> </p-button>
+    </div>
+</div>

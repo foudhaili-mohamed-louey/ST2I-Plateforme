@@ -1,0 +1,17 @@
+<div class="conges-page">
+    <div class="page-header">
+        <h2>Gestion des congés</h2>
+    </div>
+
+    <app-conge-stats></app-conge-stats>
+
+    <div class="grid grid-cols-12 gap-6 mt-6">
+        <div class="col-span-12 lg:col-span-5">
+            <app-conge-form (submitRequest)="onSubmit($event)"></app-conge-form>
+        </div>
+
+        <div class="col-span-12 lg:col-span-7">
+            <app-conge-history [requests]="requests"></app-conge-history>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="card ui-card">
+    <div class="bar">Modifier projet</div>
+
+    <div class="block">
+        <div class="block-title">Informations projet</div>
+
+        <div class="formgrid3">
+            <div class="field">
+                <label>Nom *</label>
+                <input pInputText [(ngModel)]="form.name" />
+            </div>
+
+            <div class="field">
+                <label>Code *</label>
+                <input pInputText [(ngModel)]="form.code" />
+            </div>
+
+            <div class="field">
+                <label>Client</label>
+                <input pInputText [(ngModel)]="form.clientName" />
+            </div>
+
+            <div class="field span3">
+                <label>Description</label>
+                <textarea class="p-inputtext w-full" rows="3" [(ngModel)]="form.description"></textarea>
+            </div>
+
+            <div class="field">
+                <label>Date début</label>
+                <input class="p-inputtext w-full" type="date" [(ngModel)]="form.startDate" />
+            </div>
+
+            <div class="field">
+                <label>Date fin</label>
+                <input class="p-inputtext w-full" type="date" [(ngModel)]="form.endDate" />
+            </div>
+
+            <div class="field">
+                <label>Budget</label>
+                <input class="p-inputtext w-full" type="number" [(ngModel)]="form.budget" />
+            </div>
+
+            <div class="field active-row">
+                <p-checkbox [(ngModel)]="form.isActive" binary="true"></p-checkbox>
+                <span>Actif</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-sticky">
+        <p-button icon="pi pi-save" label="Sauvegarder" (onClick)="save()"></p-button>
+        <p-button icon="pi pi-arrow-left" label="Retour" severity="danger" [outlined]="true" (onClick)="back()"></p-button>
+    </div>
+</div>

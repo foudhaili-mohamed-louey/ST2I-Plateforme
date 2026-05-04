@@ -1,0 +1,40 @@
+<div class="card">
+    <div class="flex justify-between items-center mb-4">
+        <div>
+            <div class="font-semibold text-xl">Historique des demandes</div>
+            <span class="text-muted-color text-sm"> Liste de vos demandes de congé </span>
+        </div>
+    </div>
+
+    <p-table [value]="requests" [paginator]="true" [rows]="5" responsiveLayout="scroll" styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Date demande</th>
+                <th>Type</th>
+                <th>Date début</th>
+                <th>Date fin</th>
+                <th>Motif</th>
+                <th>Statut</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-request>
+            <tr>
+                <td>{{ request.createdAt | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ request.leaveTypeName }}</td>
+                <td>{{ request.startDate | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ request.endDate | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ request.reason }}</td>
+                <td>
+                    <p-tag [value]="getStatusLabel(request.status)" [severity]="getSeverity(request.status)"> </p-tag>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6" class="text-center py-6">Aucune demande trouvée.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

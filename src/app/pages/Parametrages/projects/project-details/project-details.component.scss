@@ -1,0 +1,40 @@
+:host {
+    --brand: #1f3b6d;
+    display: block;
+}
+
+.ui-card {
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--surface-card);
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+.bar {
+    background: var(--brand);
+    color: #fff;
+    padding: 0.9rem 1rem;
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.rows {
+    background: var(--surface-card);
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 0.95rem 1rem;
+    border-bottom: 1px solid var(--surface-border);
+}
+.row b,
+.row span {
+    color: var(--text-color);
+}
+
+.details-footer {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 1rem;
+}
